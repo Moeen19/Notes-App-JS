@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Notes App</title>
+    <link rel="stylesheet" href="output.css" />
+  </head>
+  <body class="font-sans">
+    <div class="bg-[#43799c] w-full py-[16px]">
+      <div class="mx-auto flex flex-col ml-[250px]">
+        <h1
+          class="font-bold max-w-[396px] w-full text-white text-[2.25rem] leading-[2.5rem]"
+        >
+          Notes App
+        </h1>
+        <p class="font-light max-w-[396px] w-full text-white">
+          Take Notes and never forget
+        </p>
+      </div>
+    </div>
+
+    <!-- HOME PAGE -->
+    <div class="homepage">
+      <!-- Home Bar -->
+      <div id="div2" class="flex gap-[10px] bg-[#F7F7F7] py-[10px]">
+        <div class="max-w-[396px] ml-[250px] w-full">
+          <input
+            id="input"
+            class="py-[8px]"
+            type="text"
+            placeholder="Filter Notes"
+          />
+          <select id="select" class="py-[8px]" name="" id="">
+            <option value="">Sort by last edited</option>
+            <option value="">Sort by alphabetically</option>
+            <option value="">Sort by recently created</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Home-->
+      <div id="div3" class="text-center p-[30px]">
+        <p class="notes text-[20px]">No notes to show</p>
+      </div>
+
+      <!-- notes created -->
+      <div class="ncr1">
+        <ul class="ncr"></ul>
+      </div>
+
+      <div class="max-w-[396px] ml-[250px] w-full mx-auto mt-[10px]">
+        <button class="create bg-[#43799c] text-white text-[18px] p-3">
+          Create Note
+        </button>
+      </div>
+    </div>
+
+    <!-- NOTES PAGE -->
+
+    <!-- Create Note  -->
+
+    <div class="notemain hidden">
+      <!--Create Note-->
+      <div id="div1" class="gap-[10px] bg-[#F7F7F7] py-[10px]">
+        <a href="#" class="ml-[250px]">Home</a>
+      </div>
+      <div id="input1" class="items-center">
+        <input
+          value=""
+          class="title p-[10px] ml-[250px] mt-[30px] border-solid border-[1px] border-[#E7E5E4] rounded-[5px] max-w-[600px] w-full"
+          type="text"
+          placeholder="Type a note title"
+        />
+      </div>
+      <div id="input2" class="">
+        <textarea
+          class="note p-[10px] ml-[250px] mt-[30px] border-solid border-[1px] min-h-[200px] border-[#E7E5E4] rounded-[5px] max-w-[600px] w-full"
+          type="text"
+          placeholder="Type the note body"
+        ></textarea>
+      </div>
+      <!-- AddRemove Buttons -->
+      <div class="AddRem ml-[250px] max-w-[600px] w-full">
+        <div class="flex justify-between">
+          <button class="rem bg-[#555]">Remove Note</button>
+          <button class="add bg-[#555]">Add Note</button>
+          <button class="update bg-[#555] hidden">Update Note</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="main.js"></script>
+  </body>
+</html>
