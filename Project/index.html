@@ -23,15 +23,15 @@
     <!-- HOME PAGE -->
     <div class="homepage">
       <!-- Home Bar -->
-      <div id="div2" class="flex gap-[10px] bg-[#F7F7F7] py-[10px]">
-        <div class="max-w-[396px] ml-[250px] w-full">
+      <div id="div2" class="flex gap-[10px]  bg-[#F7F7F7] py-[10px]">
+        <div class="max-w-[550px] ml-[250px] w-full">
           <input
             id="input"
-            class="py-[8px]"
+            class="py-[8px] px-[8px] rounded-[8px] outline-none"
             type="text"
             placeholder="Filter Notes"
           />
-          <select id="select" class="py-[8px]" name="" id="">
+          <select id="select" class="rounded-[8px] cursor-pointer outline-none p-[8px]" name="" id="">
             <option value="">Sort by last edited</option>
             <option value="">Sort by alphabetically</option>
             <option value="">Sort by recently created</option>
@@ -50,7 +50,7 @@
       </div>
 
       <div class="max-w-[396px] ml-[250px] w-full mx-auto mt-[10px]">
-        <button class="create bg-[#43799c] text-white text-[18px] p-3">
+        <button class="create rounded-[8px] bg-[#43799c] text-white text-[18px] p-3">
           Create Note
         </button>
       </div>
@@ -62,20 +62,20 @@
 
     <div class="notemain hidden">
       <!--Create Note-->
-      <div id="div1" class="gap-[10px] bg-[#F7F7F7] py-[10px]">
-        <a href="#" class="ml-[250px]">Home</a>
+      <div id="div1" class="gap-[10px]  bg-[#F7F7F7] py-[10px]">
+        <a href="#" class="ml-[250px] hover:text-[red]">Home</a>
       </div>
       <div id="input1" class="items-center">
         <input
           value=""
-          class="title p-[10px] ml-[250px] mt-[30px] border-solid border-[1px] border-[#E7E5E4] rounded-[5px] max-w-[600px] w-full"
+          class="title p-[10px] ml-[250px] mt-[30px] outline-none border-solid border-[1px] border-[#E7E5E4] rounded-[5px] max-w-[600px] w-full"
           type="text"
           placeholder="Type a note title"
         />
       </div>
       <div id="input2" class="">
         <textarea
-          class="note p-[10px] ml-[250px] mt-[30px] border-solid border-[1px] min-h-[200px] border-[#E7E5E4] rounded-[5px] max-w-[600px] w-full"
+          class="note p-[10px] ml-[250px] resize-none outline-none mt-[30px] border-solid border-[1px] min-h-[200px] border-[#E7E5E4] rounded-[5px] max-w-[600px] w-full"
           type="text"
           placeholder="Type the note body"
         ></textarea>
@@ -83,9 +83,9 @@
       <!-- AddRemove Buttons -->
       <div class="AddRem ml-[250px] max-w-[600px] w-full">
         <div class="flex justify-between">
-          <button class="rem bg-[#555]">Remove Note</button>
-          <button class="add bg-[#555]">Add Note</button>
-          <button class="update bg-[#555] hidden">Update Note</button>
+          <button class="rem rounded-[7px] p-[7px] bg-[#43799c] text-white">Remove Note</button>
+          <button class="add rounded-[7px] p-[7px] bg-[#43799c] text-white">Add Note</button>
+          <button class="update rounded-[7px] p-[7px] text-white bg-[#43799c] hidden">Update Note</button>
         </div>
       </div>
     </div>
