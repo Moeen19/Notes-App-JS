@@ -70,11 +70,10 @@ update.addEventListener('click', (e) => {
         };
         return item;
     });
-    notes(JSON.stringify(updArr)); 
+    notes(JSON.stringify(updArr));
     homepage.classList.remove('hidden');
     notemain.classList.add('hidden');
     ncr.classList.remove('hidden')
-    location.reload();
     localStorage.setItem('my-notes', JSON.stringify(updArr));
 });
 
@@ -144,6 +143,9 @@ remove.addEventListener('click', (e) => {
     });
     localStorage.setItem('my-notes', JSON.stringify(newArr))
     notes(JSON.stringify(newArr));
+    if (array = null) {
+        div3.classList.remove('hidden');
+    }
     add.classList.remove('hidden');
     update.classList.add('hidden');
     notemain.classList.add('hidden');
