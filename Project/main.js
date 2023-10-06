@@ -189,7 +189,7 @@ const renderNotes = (array, filters) => {
         return item.title.toLowerCase().includes(filters.searchText.toLowerCase());
     });
 
-    if(newArr.length === 0) {
+    if (newArr.length === 0) {
         div3.classList.remove('hidden');
     }
     ncr.innerHTML = '';
@@ -257,8 +257,7 @@ ncr.style.fontSize = '20px';
 
 // Add button
 add.addEventListener('click', (e) => {
-    notemain.classList.add('hidden');
-    homepage.classList.remove('hidden');
+
     ncr.classList.remove('hidden');
     if (title1.value && note1.value) {
         const li = document.createElement('li');
@@ -282,7 +281,8 @@ add.addEventListener('click', (e) => {
         li.style.marginLeft = '250px';
         li.style.width = '100%';
         div3.classList.add('hidden');
-
+        notemain.classList.add('hidden');
+        homepage.classList.remove('hidden');
         li.addEventListener('click', () => {
             notemain.classList.remove('hidden');
             homepage.classList.add('hidden');
