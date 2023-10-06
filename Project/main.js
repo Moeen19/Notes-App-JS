@@ -8,6 +8,7 @@ const add = document.querySelector('.add');
 let ncr = document.querySelector('.ncr');
 let title1 = document.querySelector('.title');
 let note1 = document.querySelector('.note');
+const div3 = document.querySelector('#div3')
 const update = document.querySelector('.update');
 const searchInp = document.querySelector('#search');
 const timeStamp = () => Date.now();
@@ -141,14 +142,9 @@ remove.addEventListener('click', (e) => {
     const newArr = array.filter((subItem) => {
         return subItem.id !== updateItem;
     });
+    div3.classList.remove('hidden')
     localStorage.setItem('my-notes', JSON.stringify(newArr))
     notes(JSON.stringify(newArr));
-    // if (array = null) {
-    //     div3.classList.remove('hidden');
-    // }
-    // if(array = null) {
-    //     div3.classList.remove('hidden');
-    // } 
     add.classList.remove('hidden');
     update.classList.add('hidden');
     notemain.classList.add('hidden');
