@@ -142,6 +142,7 @@ remove.addEventListener('click', (e) => {
     const newArr = array.filter((subItem) => {
         return subItem.id !== updateItem;
     });
+    document.querySelector('#span').classList.add('hidden')
     div3.classList.remove('hidden')
     localStorage.setItem('my-notes', JSON.stringify(newArr))
     notes(JSON.stringify(newArr));
