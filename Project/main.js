@@ -32,12 +32,15 @@ const notes = (b) => {
         li.style.marginBottom = '20px';
         li.style.padding = '10px';
         li.style.maxWidth = '700px';
-        li.style.marginLeft = '250px';
+        li.style.marginLeft = 'auto';
+        li.style.marginRight = 'auto';
+        li.style.paddingLeft = 'auto';
         li.style.width = '100%';
         div3.classList.add('hidden');
         li.innerHTML = `<p>${item.title}</p><span>LastEdited: ${showTime(item.Edited)}</span>`;
         li.addEventListener('click', () => {
             document.querySelector('#span').classList.remove('hidden')
+            remove.classList.remove('hidden');
             document.querySelector('#span').innerText = `Edited: ${showTime(item.Edited)}`
             updateItem = item.id;
             add.classList.add('hidden');
@@ -112,12 +115,7 @@ button.addEventListener('click', (e) => {
     add.classList.remove('hidden');
     update.classList.add('hidden');
     notemain.classList.remove('hidden');
-    remove.addEventListener('click', () => {
-        notemain.classList.add('hidden');
-        ncr.classList.remove('hidden');
-        homepage.classList.remove('hidden');
-    });
-
+    remove.classList.add('hidden');
     title1.value = '';
     note1.value = '';
 });
@@ -185,14 +183,18 @@ const sortNotes = (array, sortBy) => {
 
 // render
 const renderNotes = (array, filters) => {
+
     array = sortNotes(array, filters.sortBy);
-    const neArr = array.filter((item) => {
+    const newArr = array.filter((item) => {
         return item.title.toLowerCase().includes(filters.searchText.toLowerCase());
     });
 
+    if(newArr.length === 0) {
+        div3.classList.remove('hidden');
+    }
     ncr.innerHTML = '';
 
-    neArr.forEach((item) => {
+    newArr.forEach((item) => {
         const li = document.createElement('li');
         li.innerHTML = `<p>${item.title}</p><span>LastEdited: ${showTime(item.Edited)}</span>`;
         li.style.cursor = 'pointer';
@@ -201,12 +203,14 @@ const renderNotes = (array, filters) => {
         li.style.marginBottom = '20px';
         li.style.padding = '10px';
         li.style.maxWidth = '700px';
-        li.style.marginLeft = '250px';
+        li.style.marginLeft = 'auto';
+        li.style.marginRight = 'auto';
         li.style.width = '100%';
         div3.classList.add('hidden');
 
         li.addEventListener('click', () => {
             updateItem = item.id;
+            remove.classList.remove('hidden');
             add.classList.add('hidden');
             update.classList.remove('hidden');
             notemain.classList.remove('hidden');
@@ -239,6 +243,7 @@ home.addEventListener('click', (e) => {
     homepage.classList.remove('hidden');
     notemain.classList.add('hidden');
     ncr.classList.remove('hidden');
+    remove.classList.add('hidden');
     document.querySelector('#span').classList.add('hidden');
     // notes();
 });
