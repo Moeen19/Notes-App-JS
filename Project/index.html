@@ -26,15 +26,15 @@
       <div id="div2" class="flex gap-[10px]  bg-[#F7F7F7] py-[10px]">
         <div class="max-w-[550px] ml-[250px] w-full">
           <input
-            id="input"
+            id="search"
             class="py-[8px] px-[8px] rounded-[8px] outline-none"
             type="text"
             placeholder="Filter Notes"
           />
-          <select id="select" class="rounded-[8px] cursor-pointer outline-none p-[8px]" name="" id="">
-            <option value="">Sort by last edited</option>
-            <option value="">Sort by alphabetically</option>
-            <option value="">Sort by recently created</option>
+          <select id="sortBy" class="rounded-[8px] cursor-pointer outline-none p-[8px]" name="" id="">
+            <option value="byEdited">Sort by last edited</option>
+            <option value="byAlpha">Sort by alphabetically</option>
+            <option value="byCreated">Sort by recently created</option>
           </select>
         </div>
       </div>
@@ -46,7 +46,8 @@
 
       <!-- notes created -->
       <div class="ncr1">
-        <ul class="ncr"></ul>
+        <ul class="ncr">
+        </ul>
       </div>
 
       <div class="max-w-[396px] ml-[250px] w-full mx-auto mt-[10px]">
@@ -62,8 +63,9 @@
 
     <div class="notemain hidden">
       <!--Create Note-->
-      <div id="div1" class="gap-[10px]  bg-[#F7F7F7] py-[10px]">
+      <div id="div1" class="gap-[420px] flex bg-[#F7F7F7] py-[10px]">
         <a href="#" class="ml-[250px] hover:text-[red]">Home</a>
+        <span id="span"></span>
       </div>
       <div id="input1" class="items-center">
         <input
@@ -91,5 +93,6 @@
     </div>
 
     <script src="main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment-with-locales.min.js"></script>
   </body>
 </html>
