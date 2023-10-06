@@ -143,9 +143,12 @@ remove.addEventListener('click', (e) => {
     });
     localStorage.setItem('my-notes', JSON.stringify(newArr))
     notes(JSON.stringify(newArr));
-    if (array = null) {
-        div3.classList.remove('hidden');
-    }
+    // if (array = null) {
+    //     div3.classList.remove('hidden');
+    // }
+    // if(array = null) {
+    //     div3.classList.remove('hidden');
+    // } 
     add.classList.remove('hidden');
     update.classList.add('hidden');
     notemain.classList.add('hidden');
