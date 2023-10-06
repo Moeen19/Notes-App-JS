@@ -41,7 +41,6 @@ const notes = (b) => {
         div3.classList.add('hidden');
         // let n = document.createTextNode(showTime(item.Edited));
         li.innerHTML = `<p>${item.title}</p><span>LastEdited: ${showTime(item.Edited)}</span>`;
-        li.style.fontSize = '18px'
         // li.append(n);
         li.addEventListener('click', () => {
             document.querySelector('#span').classList.remove('hidden')
