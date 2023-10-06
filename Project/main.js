@@ -13,9 +13,7 @@ const update = document.querySelector('.update');
 const searchInp = document.querySelector('#search');
 const timeStamp = () => Date.now();
 let array = [];
-// let t = moment().fromNow();
-// console.log(t)
-// let timeText = document.createTextNode(`LastEdited: ${moment(timeStamp).fromNow()}`);
+
 let localNotes = localStorage.getItem('my-notes');
 let activeItem;
 let updateItem;
@@ -28,8 +26,6 @@ const notes = (b) => {
     ncr.innerHTML = null;
     array.forEach((item) => {
         const li = document.createElement('li');
-        // const liT = document.createTextNode(item.title);
-        // li.appendChild(liT);
         li.style.cursor = 'pointer';
         li.style.background = '#F7F7F7';
         li.style.border = '1px solid gray';
@@ -39,9 +35,7 @@ const notes = (b) => {
         li.style.marginLeft = '250px';
         li.style.width = '100%';
         div3.classList.add('hidden');
-        // let n = document.createTextNode(showTime(item.Edited));
         li.innerHTML = `<p>${item.title}</p><span>LastEdited: ${showTime(item.Edited)}</span>`;
-        // li.append(n);
         li.addEventListener('click', () => {
             document.querySelector('#span').classList.remove('hidden')
             document.querySelector('#span').innerText = `Edited: ${showTime(item.Edited)}`
@@ -103,12 +97,6 @@ const showTime = (Edited) => {
 
 };
 
-// console.log(showTime())
-
-
-
-
-
 // Get items from the localStorage upon page load.
 if (localNotes) {
     JSON.parse(localNotes)
@@ -124,7 +112,6 @@ button.addEventListener('click', (e) => {
     add.classList.remove('hidden');
     update.classList.add('hidden');
     notemain.classList.remove('hidden');
-    // document.querySelector('#span').classList.add('hidden');
     remove.addEventListener('click', () => {
         notemain.classList.add('hidden');
         ncr.classList.remove('hidden');
@@ -207,8 +194,6 @@ const renderNotes = (array, filters) => {
 
     neArr.forEach((item) => {
         const li = document.createElement('li');
-        // const liT = document.createTextNode(item.title);
-        // li.appendChild(liT);
         li.innerHTML = `<p>${item.title}</p><span>LastEdited: ${showTime(item.Edited)}</span>`;
         li.style.cursor = 'pointer';
         li.style.background = '#F7F7F7';
@@ -306,8 +291,3 @@ add.addEventListener('click', (e) => {
         note1.value = '';
     };
 });
-
-
-
-
-// console.log(n - m);
