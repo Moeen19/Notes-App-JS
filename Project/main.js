@@ -82,23 +82,18 @@ const showTime = (Edited) => {
     const hour = min / 60;
     const day = hour / 24;
 
+    console.log
     if (sec < 60) {
         return `a few secs ago`;
-    } else if (min < 2) {
-        return `a min ago`
-    } else if (sec > 59) {
-        return `${Math.floor(min)} mins ago`;
-    } else if (hour < 2) {
-        return `an hour ago`
-    } else if (min > 59) {
-        return `${Math.floor(hour)} hours ago`;
-    } else if (day < 2) {
-        return `a day ago`
-    } else if (hour > 23) {
-        return `${Math.floor(day)} days ago`
-    };
-
+    } else if(min <= 59) {
+        return min < 2 ? 'a min ago' : `${Math.floor(min)} mins ago`;
+    } else if(hour <= 23) {
+        return hour < 2 ? 'an hour ago' : `${Math.floor(hour)} hours ago`;
+    } else {
+        return day < 2 ? `a day ago` : `${Math.floor(day)} days ago`;
+    }
 };
+
 
 // Get items from the localStorage upon page load.
 if (localNotes) {
