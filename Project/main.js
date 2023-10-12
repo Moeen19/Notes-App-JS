@@ -19,11 +19,18 @@ let activeItem;
 let updateItem;
 
 // function to getItems
-const notes = (b) => {
-    if (b) {
-        array = [...JSON.parse(b)];
+
+let gNotes = async (array) => {
+    const response = await fetch('https://dummyjson.com/todos');
+    if (response.status === 200) {
+        let data = response.json();
+        return data
     }
-    ncr.innerHTML = null;
+}
+
+let notes = gNotes(array).then((data) => {
+    data.limit = 300;
+    array = data.todos
     array.forEach((item) => {
         const li = document.createElement('li');
         li.style.cursor = 'pointer';
@@ -37,7 +44,7 @@ const notes = (b) => {
         li.style.paddingLeft = 'auto';
         li.style.width = '100%';
         div3.classList.add('hidden');
-        li.innerHTML = `<p>${item.title}</p><span>LastEdited: ${showTime(item.Edited)}</span>`;
+        li.innerHTML = `${item.todo}`;
         li.addEventListener('click', () => {
             document.querySelector('#span').classList.remove('hidden')
             remove.classList.remove('hidden');
@@ -49,12 +56,51 @@ const notes = (b) => {
             homepage.classList.add('hidden');
             ncr.classList.add('hidden');
             let activeItem = { ...item };
-            title1.value = activeItem.title;
+            title1.value = activeItem.todo;
             note1.value = activeItem.description;
         });
-        ncr.appendChild(li);
-    });
-};
+        ncr.appendChild(li)
+    })
+}).catch((err) => {
+    console.log(err)
+})
+
+// const notes = (b) => {
+//     if (b) {
+//         array = [...JSON.parse(b)];
+//     }
+//     ncr.innerHTML = null;
+//     array.forEach((item) => {
+//         const li = document.createElement('li');
+//         li.style.cursor = 'pointer';
+//         li.style.background = '#F7F7F7';
+//         li.style.border = '1px solid gray';
+//         li.style.marginBottom = '20px';
+//         li.style.padding = '10px';
+//         li.style.maxWidth = '700px';
+//         li.style.marginLeft = 'auto';
+//         li.style.marginRight = 'auto';
+//         li.style.paddingLeft = 'auto';
+//         li.style.width = '100%';
+//         div3.classList.add('hidden');
+//         li.innerHTML = `<p>${item.title}</p><span>LastEdited: ${showTime(item.Edited)}</span>`;
+//         li.addEventListener('click', () => {
+//             document.querySelector('#span').classList.remove('hidden')
+//             remove.classList.remove('hidden');
+//             document.querySelector('#span').innerText = `Edited: ${showTime(item.Edited)}`
+//             updateItem = item.id;
+//             add.classList.add('hidden');
+//             update.classList.remove('hidden');
+//             notemain.classList.remove('hidden');
+//             homepage.classList.add('hidden');
+//             ncr.classList.add('hidden');
+//             let activeItem = { ...item };
+//             title1.value = activeItem.title;
+//             note1.value = activeItem.description;
+//         });
+//         ncr.appendChild(li);
+//     });
+// };
 
 // Update Button
 update.addEventListener('click', (e) => {
@@ -68,11 +114,11 @@ update.addEventListener('click', (e) => {
         };
         return item;
     });
-    notes(JSON.stringify(updArr));
+    // notes(JSON.stringify(updArr));
     homepage.classList.remove('hidden');
     notemain.classList.add('hidden');
-    ncr.classList.remove('hidden')
-    localStorage.setItem('my-notes', JSON.stringify(updArr));
+    ncr.classList.remove('hidden');
+    // localStorage.setItem('my-notes', JSON.stringify(updArr));
 });
 
 const showTime = (Edited) => {
@@ -82,12 +128,11 @@ const showTime = (Edited) => {
     const hour = min / 60;
     const day = hour / 24;
 
-    console.log
     if (sec < 60) {
         return `a few secs ago`;
-    } else if(min <= 59) {
+    } else if (min <= 59) {
         return min < 2 ? 'a min ago' : `${Math.floor(min)} mins ago`;
-    } else if(hour <= 23) {
+    } else if (hour <= 23) {
         return hour < 2 ? 'an hour ago' : `${Math.floor(hour)} hours ago`;
     } else {
         return day < 2 ? `a day ago` : `${Math.floor(day)} days ago`;
@@ -96,11 +141,10 @@ const showTime = (Edited) => {
 
 
 // Get items from the localStorage upon page load.
-if (localNotes) {
-    JSON.parse(localNotes)
-    notes(localNotes);
-};
-
+// if (localNotes) {
+//     JSON.parse(localNotes)
+//     notes(localNotes);
+// };
 
 // Create Button
 button.addEventListener('click', (e) => {
@@ -119,13 +163,26 @@ button.addEventListener('click', (e) => {
 
 // Remove Button
 remove.addEventListener('click', (e) => {
-    const newArr = array.filter((subItem) => {
-        return subItem.id !== updateItem;
-    });
+    let removeNote = async(id) => {
+        const request = await fetch('https://dummyjson.com/todos/1', {
+            method: 'DELETE',
+          })          
+        if(request.status === 200) {
+            let data = await request.json();
+            console.log(data)
+            return data;
+        }
+    }
+    removeNote().then((data) => {
+    })
+    
+    // const newArr = array.filter((subItem) => {
+    //     return subItem.id !== updateItem;
+    // });
     document.querySelector('#span').classList.add('hidden')
     div3.classList.remove('hidden')
-    localStorage.setItem('my-notes', JSON.stringify(newArr))
-    notes(JSON.stringify(newArr));
+    // localStorage.setItem('my-notes', JSON.stringify(newArr))
+    // notes(JSON.stringify(newArr));
     add.classList.remove('hidden');
     update.classList.add('hidden');
     notemain.classList.add('hidden');
@@ -138,8 +195,9 @@ remove.addEventListener('click', (e) => {
 // Filter value
 const filters = {
     searchText: '',
-    sortBy: 'byEdited'
+    sortBy: 'byEdited',
 }
+
 
 // sort function
 const sortNotes = (array, sortBy) => {
@@ -178,7 +236,6 @@ const sortNotes = (array, sortBy) => {
 
 // render
 const renderNotes = (array, filters) => {
-
     array = sortNotes(array, filters.sortBy);
     const newArr = array.filter((item) => {
         return item.title.toLowerCase().includes(filters.searchText.toLowerCase());
@@ -250,44 +307,102 @@ ncr.style.marginTop = '30px';
 ncr.style.fontSize = '20px';
 
 
+
 // Add button
 add.addEventListener('click', (e) => {
-
     ncr.classList.remove('hidden');
-    if (title1.value && note1.value) {
-        const li = document.createElement('li');
-        const liT = document.createTextNode(`${title1.value}`);
-        li.appendChild(liT);
-        ncr.appendChild(li);
-        const list = {
-            title: title1.value,
-            description: note1.value,
-            id: parseInt(Math.random() * 1000),
-            Edited: timeStamp(),
-            Created: timeStamp(),
-        };
-        array.push(list);
-        let listJSON = JSON.stringify(array);
-        li.style.background = '#F7F7F7';
-        li.style.border = '1px solid gray';
-        li.style.marginBottom = '20px';
-        li.style.padding = '10px';
-        li.style.maxWidth = '700px';
-        li.style.marginLeft = '250px';
-        li.style.width = '100%';
-        div3.classList.add('hidden');
-        notemain.classList.add('hidden');
-        homepage.classList.remove('hidden');
-        li.addEventListener('click', () => {
-            notemain.classList.remove('hidden');
-            homepage.classList.add('hidden');
-            ncr.classList.add('hidden');
-        });
-        if (title1.value && note1.value) {
-            localStorage.setItem('my-notes', listJSON);
-        };
-        notes();
-        title1.value = '';
-        note1.value = '';
-    };
+    ncr.innerHTML = null;
+    if (title1.value) {
+        let newNote = async () => {
+            response = await fetch('https://dummyjson.com/todos/add', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    todo: title1.value,
+                    completed: false,
+                    userId: 5,
+                })
+            })
+            if (response.status === 200) {
+                let data = await response.json();
+                console.log('data ' , data)
+                return data;
+            } else {
+                throw new Error('An error has occured')
+            }
+        }
+        notes = newNote().then((data) => {
+            array.push(data);
+            console.log(data)
+            array.forEach((item) => {
+                const li = document.createElement('li');
+                li.style.cursor = 'pointer';
+                li.style.background = '#F7F7F7';
+                li.style.border = '1px solid gray';
+                li.style.marginBottom = '20px';
+                li.style.padding = '10px';
+                li.style.maxWidth = '700px';
+                li.style.marginLeft = 'auto';
+                li.style.marginRight = 'auto';
+                li.style.paddingLeft = 'auto';
+                li.style.width = '100%';
+                div3.classList.add('hidden');
+                li.innerHTML = `${item.todo}`;
+                li.addEventListener('click', () => {
+                    document.querySelector('#span').classList.remove('hidden')
+                    remove.classList.remove('hidden');
+                    document.querySelector('#span').innerText = `Edited: ${showTime(item.Edited)}`
+                    updateItem = item.id;
+                    add.classList.add('hidden');
+                    update.classList.remove('hidden');
+                    notemain.classList.remove('hidden');
+                    homepage.classList.add('hidden');
+                    ncr.classList.add('hidden');
+                    let activeItem = { ...item };
+                    title1.value = activeItem.todo;
+                    // note1.value = activeItem.description;
+                });
+                ncr.appendChild(li)
+            })
+        }).catch((err) => {
+            console.log(err)
+        })
+        notemain.classList.add('hidden')
+        homepage.classList.remove('hidden')
+    }
+    // if (title1.value && note1.value) {
+    //     const li = document.createElement('li');
+    //     const liT = document.createTextNode(`${title1.value}`);
+    //     li.appendChild(liT);
+    //     ncr.appendChild(li);
+    //     const list = {
+    //         title: title1.value,
+    //         description: note1.value,
+    //         id: parseInt(Math.random() * 1000),
+    //         Edited: timeStamp(),
+    //         Created: timeStamp(),
+    //     };
+    //     array.push(list);
+    //     let listJSON = JSON.stringify(array);
+    //     li.style.background = '#F7F7F7';
+    //     li.style.border = '1px solid gray';
+    //     li.style.marginBottom = '20px';
+    //     li.style.padding = '10px';
+    //     li.style.maxWidth = '700px';
+    //     li.style.marginLeft = '250px';
+    //     li.style.width = '100%';
+    //     div3.classList.add('hidden');
+    //     notemain.classList.add('hidden');
+    //     homepage.classList.remove('hidden');
+    //     li.addEventListener('click', () => {
+    //         notemain.classList.remove('hidden');
+    //         homepage.classList.add('hidden');
+    //         ncr.classList.add('hidden');
+    //     });
+    //     if (title1.value && note1.value) {
+    //         localStorage.setItem('my-notes', listJSON);
+    //     };
+    //     notes();
+    //     title1.value = '';
+    //     note1.value = '';
 });
