@@ -20,18 +20,11 @@ let updateItem;
 
 // function to getItems
 
-let gNotes = async (array) => {
-    const response = await fetch('https://dummyjson.com/todos');
-    if (response.status === 200) {
-        let data = response.json();
-        return data
-    }
-}
 
-let notes = gNotes(array).then((data) => {
-    data.limit = 300;
-    array = data.todos
-    array.forEach((item) => {
+let notes = (data) => {
+
+    data.forEach((item) => {
+        console.log('ss')
         const li = document.createElement('li');
         li.style.cursor = 'pointer';
         li.style.background = '#F7F7F7';
@@ -61,9 +54,20 @@ let notes = gNotes(array).then((data) => {
         });
         ncr.appendChild(li)
     })
-}).catch((err) => {
-    console.log(err)
-})
+}
+
+let gNotes = async () => {
+    const response = await fetch('https://dummyjson.com/todos');
+    if (response.status === 200) {
+        let data = await response.json();
+        console.log(data.todos, ' ---')
+        array = await data.todos;
+        notes(array);
+    }
+}
+
+gNotes();
+
 
 // const notes = (b) => {
 //     if (b) {
@@ -104,16 +108,44 @@ let notes = gNotes(array).then((data) => {
 
 // Update Button
 update.addEventListener('click', (e) => {
-    let updArr = array.map((item) => {
-        if (item.id === updateItem) {
-            let a = Date.now();
-            id = item.id;
-            item.title = title1.value;
-            item.description = note1.value;
-            item.Edited = a;
-        };
-        return item;
-    });
+    ncr.innerHTML = '';
+    let updArr = async () => {
+        const request = await fetch('https://dummyjson.com/todos/1', {
+            method: 'PUT', /* or PATCH */
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                completed: false,
+            })
+        })
+        if (request.status === 200) {
+            let data = await request.json();
+            // data.id = updateItem
+            console.log(data, 'ssg')
+            array = array.map((item) => {
+                if (item.id === updateItem) {
+                    // let a = Date.now();
+                    id = item.id;
+                    item.todo = title1.value;
+                };
+                return item;
+            })
+            console.log(array, 'arr')
+            notes(array)
+        } else {
+            throw new Error('An error has occured')
+        }
+    }
+    updArr()
+    // let updArr = array.map((item) => {
+    //     if (item.id === updateItem) {
+    //         let a = Date.now();
+    //         id = item.id;
+    //         item.title = title1.value;
+    //         item.description = note1.value;
+    //         item.Edited = a;
+    //     };
+    //     return item;
+    // });
     // notes(JSON.stringify(updArr));
     homepage.classList.remove('hidden');
     notemain.classList.add('hidden');
@@ -163,19 +195,27 @@ button.addEventListener('click', (e) => {
 
 // Remove Button
 remove.addEventListener('click', (e) => {
-    let removeNote = async(id) => {
+    ncr.innerHTML = null;
+    let removeNote = async (id) => {
         const request = await fetch('https://dummyjson.com/todos/1', {
             method: 'DELETE',
-          })          
-        if(request.status === 200) {
+        })
+        if (request.status === 200) {
             let data = await request.json();
+            // data.todo = title1.value
+            // data.id = parseInt(Math.random() * 1000);
             console.log(data)
-            return data;
+            console.log(updateItem)
+
+            array = array.filter((item) => {
+                return item.id !== updateItem;
+            })
+            notes(array);
+
+            console.log(array, 'ss')
         }
     }
-    removeNote().then((data) => {
-    })
-    
+    removeNote()
     // const newArr = array.filter((subItem) => {
     //     return subItem.id !== updateItem;
     // });
@@ -259,7 +299,6 @@ const renderNotes = (array, filters) => {
         li.style.marginRight = 'auto';
         li.style.width = '100%';
         div3.classList.add('hidden');
-
         li.addEventListener('click', () => {
             updateItem = item.id;
             remove.classList.remove('hidden');
@@ -325,7 +364,7 @@ add.addEventListener('click', (e) => {
             })
             if (response.status === 200) {
                 let data = await response.json();
-                console.log('data ' , data)
+                console.log('data ', data)
                 return data;
             } else {
                 throw new Error('An error has occured')
@@ -333,7 +372,7 @@ add.addEventListener('click', (e) => {
         }
         notes = newNote().then((data) => {
             array.push(data);
-            console.log(data)
+            console.log(data);
             array.forEach((item) => {
                 const li = document.createElement('li');
                 li.style.cursor = 'pointer';
